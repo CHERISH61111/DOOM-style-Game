@@ -33,21 +33,21 @@ class Player:
 
     def get_damage(self, damage):
         self.health -= damage
-        self.game.object_renderer.player_damage()
-        self.game.sound.player_pain.play()
+        #self.game.object_renderer.player_damage()
+        # 사운드 self.game.sound.player_pain.play()
         self.check_game_over()
 
     def single_fire_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1 and not self.shot and not self.game.weapon.reloading:
-                self.game.sound.shotgun.play()
+                # 사운드 self.game.sound.shotgun.play()
                 self.shot = True
                 self.game.weapon.reloading = True
 
     def movement(self):
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
-        dx, dy = 0, 0
+        dx, dy = 0, 0 
         speed = PLAYER_SPEED * self.game.delta_time
         speed_sin = speed * sin_a
         speed_cos = speed * cos_a
@@ -74,12 +74,14 @@ class Player:
         #     self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %= math.tau
 
+    # 벽인지 판단
     def check_wall(self, x, y):
         return (x, y) not in self.game.map.world_map
 
+    # 벽을 뚫지 못하도록 collision 체크
     def check_wall_collision(self, dx, dy):
         scale = PLAYER_SIZE_SCALE / self.game.delta_time
-        if self.check_wall(int(self.x + dx * scale), int(self.y)):
+        if self.check_wall(int(self.x + dx * scale), int(self.y)): #벽 아닐때 움직이기
             self.x += dx
         if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
@@ -104,9 +106,9 @@ class Player:
         self.recover_health()
 
     @property
-    def pos(self):
+    def pos(self): # 플레이어의 위치
         return self.x, self.y
 
     @property
-    def map_pos(self):
+    def map_pos(self):  # 플레이어가 밟고 있는 맵 타일 위치
         return int(self.x), int(self.y)

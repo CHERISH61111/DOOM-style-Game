@@ -11,7 +11,6 @@ from weapon import *
 from sound import *
 from pathfinding import *
 
-
 class Game:
     def __init__(self):
         pg.init()
@@ -31,9 +30,9 @@ class Game:
         self.raycasting = RayCasting(self)
         self.object_handler = ObjectHandler(self)
         self.weapon = Weapon(self)
-        self.sound = Sound(self)
+        # 사운드 self.sound = Sound(self)
         self.pathfinding = PathFinding(self)
-        pg.mixer.music.play(-1)
+        #pg.mixer.music.play(-1) - 사운드
 
     def update(self):
         self.player.update()
@@ -45,16 +44,18 @@ class Game:
         pg.display.set_caption(f'{self.clock.get_fps() :.1f}')
 
     def draw(self):
-        # self.screen.fill('black')
+        self.screen.fill('black')
         self.object_renderer.draw()
-        self.weapon.draw()
-        # self.map.draw()
-        # self.player.draw()
+        pg.draw.circle(self.screen, 'red', (WIDTH /2, HEIGHT / 2 + 50), 3)  # 조준점 추가
+        
+        #self.weapon.draw()
+        #self.map.draw()
+        #self.player.draw()
 
     def check_events(self):
         self.global_trigger = False
         for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):  # 끄기
                 pg.quit()
                 sys.exit()
             elif event.type == self.global_event:

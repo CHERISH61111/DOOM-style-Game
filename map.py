@@ -52,6 +52,6 @@ class Map:
                 if value:
                     self.world_map[(i, j)] = value
 
-    def draw(self):
+    def draw(self):  # 맵을 시각화
         [pg.draw.rect(self.game.screen, 'darkgray', (pos[0] * 100, pos[1] * 100, 100, 100), 2)
          for pos in self.world_map]

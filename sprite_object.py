@@ -23,13 +23,13 @@ class SpriteObject:
         proj = SCREEN_DIST / self.norm_dist * self.SPRITE_SCALE
         proj_width, proj_height = proj * self.IMAGE_RATIO, proj
 
-        image = pg.transform.scale(self.image, (proj_width, proj_height))
+        image = pg.transform.scale(self.image, (proj_width, proj_height))  # 스케일 조정
 
         self.sprite_half_width = proj_width // 2
         height_shift = proj_height * self.SPRITE_HEIGHT_SHIFT
         pos = self.screen_x - self.sprite_half_width, HALF_HEIGHT - proj_height // 2 + height_shift
 
-        self.game.raycasting.objects_to_render.append((self.norm_dist, image, pos))
+        self.game.raycasting.objects_to_render.append((self.norm_dist, image, pos))  # 시각화할 물체 리스트에 추가 (거리, 이미지, 위치)
 
     def get_sprite(self):
         dx = self.x - self.player.x

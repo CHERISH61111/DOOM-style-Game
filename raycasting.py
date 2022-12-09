@@ -55,7 +55,7 @@ class RayCasting:
             for i in range(MAX_DEPTH):
                 tile_hor = int(x_hor), int(y_hor)
                 if tile_hor in self.game.map.world_map:
-                    texture_hor = self.game.map.world_map[tile_hor]
+                    texture_hor = self.game.map.world_map[tile_hor]  # 어떤 텍스쳐인지 파악
                     break
                 x_hor += dx
                 y_hor += dy
@@ -73,7 +73,7 @@ class RayCasting:
             for i in range(MAX_DEPTH):
                 tile_vert = int(x_vert), int(y_vert)
                 if tile_vert in self.game.map.world_map:
-                    texture_vert = self.game.map.world_map[tile_vert]
+                    texture_vert = self.game.map.world_map[tile_vert] # 어떤 텍스쳐인지 파악
                     break
                 x_vert += dx
                 y_vert += dy
@@ -89,7 +89,7 @@ class RayCasting:
                 x_hor %= 1
                 offset = (1 - x_hor) if sin_a > 0 else x_hor
 
-            # remove fishbowl effect
+            # remove fishbowl effect -> 근처에 갔을 떄 벽 휘는 것 방지
             depth *= math.cos(self.game.player.angle - ray_angle)
 
             # projection

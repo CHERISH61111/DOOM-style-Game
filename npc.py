@@ -52,7 +52,7 @@ class NPC(AnimatedSprite):
 
     def attack(self):
         if self.animation_trigger:
-            self.game.sound.npc_shot.play()
+            # 사운드 self.game.sound.npc_shot.play()
             if random() < self.accuracy:
                 self.game.player.get_damage(self.attack_damage)
 
@@ -71,7 +71,7 @@ class NPC(AnimatedSprite):
     def check_hit_in_npc(self):
         if self.ray_cast_value and self.game.player.shot:
             if HALF_WIDTH - self.sprite_half_width < self.screen_x < HALF_WIDTH + self.sprite_half_width:
-                self.game.sound.npc_pain.play()
+                # 사운드 self.game.sound.npc_pain.play()
                 self.game.player.shot = False
                 self.pain = True
                 self.health -= self.game.weapon.damage
@@ -80,7 +80,7 @@ class NPC(AnimatedSprite):
     def check_health(self):
         if self.health < 1:
             self.alive = False
-            self.game.sound.npc_death.play()
+            # 사운드 self.game.sound.npc_death.play()
 
     def run_logic(self):
         if self.alive:
@@ -90,23 +90,24 @@ class NPC(AnimatedSprite):
             if self.pain:
                 self.animate_pain()
 
-            elif self.ray_cast_value:
+            
+            elif self.ray_cast_value:  # 플레이어와 npc 사이에 벽이 없을 때
                 self.player_search_trigger = True
 
-                if self.dist < self.attack_dist:
+                if self.dist < self.attack_dist:  # 공격 범위 내에 있으면 공격
                     self.animate(self.attack_images)
                     self.attack()
-                else:
+                else:  # 아니면 더 쫓아오기
                     self.animate(self.walk_images)
                     self.movement()
-
-            elif self.player_search_trigger:
+            
+            elif self.player_search_trigger: # 플레이어를 발견했을 때
                 self.animate(self.walk_images)
                 self.movement()
 
-            else:
+            else:  # 아무것도 아닌 상태
                 self.animate(self.idle_images)
-        else:
+        else:  # 사망
             self.animate_death()
 
     @property
@@ -195,8 +196,8 @@ class CacoDemonNPC(NPC):
         super().__init__(game, path, pos, scale, shift, animation_time)
         self.attack_dist = 1.0
         self.health = 150
-        self.attack_damage = 25
-        self.speed = 0.05
+        self.attack_damage = 5
+        self.speed = 0.03
         self.accuracy = 0.35
 
 class CyberDemonNPC(NPC):
@@ -205,8 +206,8 @@ class CyberDemonNPC(NPC):
         super().__init__(game, path, pos, scale, shift, animation_time)
         self.attack_dist = 6
         self.health = 350
-        self.attack_damage = 15
-        self.speed = 0.055
+        self.attack_damage = 5
+        self.speed = 0.02
         self.accuracy = 0.25
 
 
